@@ -18,8 +18,12 @@
     var canvas = document.getElementById("canvas");
     var dc     = canvas.getContext("2d");
     var mgnt = canvas.getContext("2d");
-    var angle = 20, delta_angle = 0, w = 0;
+    var angle = 150, delta_angle = 0, w = 0; //komik bir yama yaptım şimdilik eski versiyonda 170 derece verince diğer kutupta küçük salınım yapması lazımdı
     window.setInterval(function(){
+      if (angle>90)
+      {
+        angle = 180-angle;
+      }
   		Torque =	0.05*Math.sin(-angle*Math.PI/180);
       w = w + Torque*1;
       angle = (angle + w*1) % 360;
@@ -28,6 +32,7 @@
       dc.clearRect(0, 0, canvas.width, canvas.height);
       mgnt.beginPath();
       mgnt.arc(110,200,125,8*(Math.PI)/12,4*(Math.PI)/12,true);
+      mgnt.fillStyle = "#FF0000";
       mgnt.stroke();
       mgnt.closePath();
       mgnt.beginPath();
