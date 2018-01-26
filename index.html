@@ -17,20 +17,21 @@
     <script>
     var canvas = document.getElementById("canvas");
     var dc     = canvas.getContext("2d");
+    var mgnt = canvas.getContext("2d");
     var angle = 20, delta_angle = 0, w = 0;
     window.setInterval(function(){
   		Torque =	0.05*Math.sin(-angle*Math.PI/180);
       w = w + Torque*1;
       angle = (angle + w*1) % 360;
       dc.clearRect(0, 0, canvas.width, canvas.height);
+      mgnt.arc(110,200,125,8*(Math.PI)/12,4*(Math.PI)/12,true);
+      mgnt.stroke();
 
       dc.save();
-      dc.fillStyle = "#FF0000";
-
+      dc.fillStyle = "#000000";
       dc.translate(110,200);
       dc.rotate( angle*Math.PI/180 );
       dc.translate(-110,-200);
-
       dc.beginPath();
       dc.moveTo(100, 100);
       dc.lineTo(120, 100);
@@ -40,7 +41,7 @@
       dc.fill();
 
       dc.restore();
-}, 1);
+}, 5);
     </script>
   </body>
 </html>
