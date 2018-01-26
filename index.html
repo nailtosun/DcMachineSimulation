@@ -13,12 +13,20 @@
     border:1px solid red;
     }
     </style>
-    <canvas id="canvas" width=600 height=600></canvas>
+
+    <canvas id="canvas" width=250 height=400></canvas>
+    <form>
+        <input type = "number" id = "userInput"/>
+        <button onclick="test()">Submit</button>
+    </form>
+
     <script>
+    var angle = prompt("Give me initial angle in degrees");
+    angle = Number(angle);
     var canvas = document.getElementById("canvas");
-    var dc     = canvas.getContext("2d");
+    var dc  = canvas.getContext("2d");
     var mgnt = canvas.getContext("2d");
-    var angle = 150, delta_angle = 0, w = 0; //komik bir yama yaptım şimdilik eski versiyonda 170 derece verince diğer kutupta küçük salınım yapması lazımdı
+    var delta_angle = 0, w = 0; //komik bir yama yaptım şimdilik eski versiyonda 170 derece verince diğer kutupta küçük salınım yapması lazımdı
     window.setInterval(function(){
       if (angle>90)
       {
