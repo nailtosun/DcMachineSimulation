@@ -25,6 +25,7 @@
       angle = (angle + w*1) % 360;
       dc.clearRect(0, 0, canvas.width, canvas.height);
       mgnt.arc(110,200,125,8*(Math.PI)/12,4*(Math.PI)/12,true);
+      mgnt.arc(110,200,125,-8*(Math.PI)/12,-4*(Math.PI)/12,false);
       mgnt.stroke();
 
       dc.save();
