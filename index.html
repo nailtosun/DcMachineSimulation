@@ -49,12 +49,15 @@
       var w = 0; //komik bir yama yaptım şimdilik eski versiyonda 170 derece verince diğer kutupta küçük salınım yapması lazımdı
 
       window.setInterval(function(){
-
-        if (angle>90)
+        if (angle <= -90)
         {
-          angle = 180-angle;
+          angle = angle + 180;
         }
-        Torque =	power*Math.sin(-angle*Math.PI/180);
+        if (angle>=90)
+        {
+          angle = -(180-angle);
+        }
+        Torque =	-power*Math.sin((angle)*Math.PI/180);
         w = w + Torque*1;
         if (w>0){
           w = w - negativeTorque*1

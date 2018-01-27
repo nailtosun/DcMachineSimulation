@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dc motor - DC excite</title>
+  </head>
+  <body>
+    <style>
+    body {
+    background-color: ivory;
+    }
+    canvas {
+    border:1px solid red;
+    }
+    </style>
+
+    <canvas id="canvas" width=250 height=400></canvas>
+    <script>
+
+      var angle = 0;
+      var power = 10000;
+      var canvas = document.getElementById("canvas");
+      var dc  = canvas.getContext("2d");
+      var mgnt = canvas.getContext("2d");
+      var w = 100; //komik bir yama yaptım şimdilik eski versiyonda 170 derece verince diğer kutupta küçük salınım yapması lazımdı
+      var wE = 100;
+      var wM = 100;
+      var delta = 40*Math.PI/180;
+      var t = 0;
+      window.setInterval(function(){
+        Torque =	-power*Math.sin(2*(wM*t+delta))*(Math.sin(wE*t)^2);
+        console.log(Torque);
+        w = w + Torque*0.001;
+        angle = angle + w*0.001 + Torque*0.001*0.0005;
+        dc.clearRect(0, 0, canvas.width, canvas.height);
+        mgnt.beginPath();
+        mgnt.arc(110,200,125,8*(Math.PI)/12,4*(Math.PI)/12,true);
+        mgnt.fillStyle = "#FF0000";
+        mgnt.stroke();
+        mgnt.closePath();
+        mgnt.beginPath();
+        mgnt.arc(110,200,125,-8*(Math.PI)/12,-4*(Math.PI)/12,false);
+        mgnt.stroke();
+        mgnt.closePath();
+        dc.save();
+        dc.fillStyle = "#000000";
+        dc.translate(110,200);
+        dc.rotate( angle*Math.PI/180 );
+        dc.translate(-110,-200);
+
+        dc.beginPath();
+        dc.moveTo(100, 100);
+        dc.lineTo(120, 100);
+        dc.lineTo(120,300);
+        dc.lineTo(100,300);
+        dc.closePath();
+
+        dc.fill();
+
+        dc.restore();
+        t = t + 0.001;
+    }, 5);
+
+
+    </script>
+  </body>
+</html>
