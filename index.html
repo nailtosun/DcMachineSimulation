@@ -24,6 +24,10 @@
     DC current:
     <br>
     <input size=5 type="number" name="power" id="power" />
+    <br>
+    Friction Damping:
+    <input type="range" min="0" max="10" step="0.01" id="friction">
+    <br>
     <input type="submit" value="Submit" />
   </form>
 </div>
@@ -38,7 +42,7 @@
 
       var angle = Number(form.angle.value);
       var power = Number(form.power.value)/100;
-      var negativeTorque = 0.0005;
+      var negativeTorque = Number(form.friction.value)/1000;
       var canvas = document.getElementById("canvas");
       var dc  = canvas.getContext("2d");
       var mgnt = canvas.getContext("2d");
