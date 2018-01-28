@@ -5,7 +5,7 @@
     <title>Dc motor - DC excite</title>
   </head>
   <body>
-    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <div align="right" id="chartContainer" style="height: 270px; width: 500;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <style>
     body {
@@ -14,16 +14,21 @@
     canvas {
     border:1px solid red;
     }
+    div.form {
+    position:absolute;
+    top: 320;
+    left:270;
+    }
     </style>
-    <canvas id="canvas" width=250 height=400></canvas>
-
+    <canvas id="canvas" width=250 height=350></canvas>
+    <div id="form" >
     <form id="info">
-    <br> Delta:  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+     Delta:  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
      &emsp; Angular velocity(rad/s)
     <br>
     <input size=5 type="number" name="delta" id="delta" />
      &emsp; &emsp; &emsp;
-    <input type="text" name="textbox3" id="textbox3" readonly="true"/>
+    <input type="text" name="velocityinfo" id="velocityinfo" readonly="true"/>
     <br>
     <br>w(electric)
     <br>
@@ -37,20 +42,21 @@
     <br>
     <input size=5 type="number" name="imax" id="imax" />
     <br>
-    Friction Damping:
-    <input type="range" min="0" max="5" step="0.01" id="friction">
-    <br>
     <input type="submit" value="Submit" />
-  </form>
-
+    </form>
+    </div>
     <script>
+    var d = document.getElementById('form');
+    d.style.position = "absolute";
+    d.style.left = 270+'px';
+    d.style.top = 320+'px';
     let form = document.getElementById("info");
     form.addEventListener("submit", function (e) {
     e.preventDefault();
     var dps = []; // dataPoints
     var chart = new CanvasJS.Chart("chartContainer", {
       title :{
-      text: "Dynamic Data"
+      text: "Torque time graph"
       },
       axisY: {
         includeZero: false
@@ -61,12 +67,12 @@
       }]
     });
     var xVal = 0;
-    var yVal = 100;
+    var yVal = 0;
     var updateInterval = 1000;
     var dataLength = 2000; // number of dataPoints visible at any point
 
 
-      var textbox3 = document.getElementById('textbox3');
+      var velocityinfo = document.getElementById('velocityinfo');
       var imax = Number(form.imax.value);
       var inductance = 0.001;
       var coefficient = imax*imax*inductance; // more efficient rather than multipyling same thing every cycle
@@ -96,10 +102,10 @@
 
 
       window.setInterval(function(){
-        Torque =	-coefficient*Math.sin(2*(wM*t+delta))*(Math.sin(wE*t)*(Math.sin(wE*t)));
+        Torque =	coefficient*Math.sin(2*(wM*t+delta))*(Math.cos(wE*t)*(Math.cos(wE*t)));
         w = w + Torque*1;
         angle = (angle + w*1) % 360; // no time - angular velocity formula
-        textbox3.value= w;
+        velocityinfo.value= w;
         dc.clearRect(0, 0, canvas.width, canvas.height);
         mgnt.beginPath();
         mgnt.arc(110,200,125,8*(Math.PI)/12,4*(Math.PI)/12,true);
