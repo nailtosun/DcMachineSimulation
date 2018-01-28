@@ -1,5 +1,5 @@
 Yeni girdi serisi için sayfanýn yenilenmesi (f5) gerekiyor. 
-
+Girdileri girince baþlýyor.
 
 Seri 1:	delta = 30; wE = wM = 10; Imax = 1; // Imax = 1 to see acceleration on animation
 Seri 2:	delta = 0; wE = wM = 10; Imax =1; // Taverage = 0 can seen clearly
