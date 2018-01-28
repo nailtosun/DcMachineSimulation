@@ -101,7 +101,7 @@
       };
 
 
-      window.setInterval(function(){
+        var a = window.setInterval(function(){
         Torque =	coefficient*Math.sin(2*(wM*t+delta))*(Math.cos(wE*t)*(Math.cos(wE*t)));
         w = w + Torque*1;
         angle = (angle + w*1) % 360; // no time - angular velocity formula
@@ -134,6 +134,9 @@
         dc.restore();
         updateChart();
         t = t + 0.001;
+        form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        clearInterval(a);});
     }, 5);
 });
 

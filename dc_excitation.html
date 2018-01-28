@@ -47,7 +47,7 @@
       var mgnt = canvas.getContext("2d");
       var w = 0; //komik bir yama yaptım şimdilik eski versiyonda 170 derece verince diğer kutupta küçük salınım yapması lazımdı
 
-      window.setInterval(function(){
+      var a = window.setInterval(function(){
         if (angle <= -90)
         {
           angle = angle + 180;
@@ -95,6 +95,9 @@
         dc.fill();
 
         dc.restore();
+        form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        clearInterval(a);});
     }, 5);
     });
 
