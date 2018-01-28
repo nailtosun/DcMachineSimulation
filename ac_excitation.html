@@ -13,25 +13,59 @@
     border:1px solid red;
     }
     </style>
-
     <canvas id="canvas" width=250 height=400></canvas>
-    <script>
 
-      var angle = 0;
-      var power = 10000;
+    <form id="info">
+    <br> Delta:
+    <br>
+    <input size=5 type="number" name="delta" id="delta" />
+    <br>
+    <br>w(electric)
+    <br>
+    <input size=5 type="number" name="wE" id="wE" />
+    <br>
+    <br>w(mechanical)
+    <br>
+    <input size=5 type="number" name="wM" id="wM" />
+    <br>
+    <br>Imax(magnitude)
+    <br>
+    <input size=5 type="number" name="imax" id="imax" />
+    <br>
+    Friction Damping:
+    <input type="range" min="0" max="5" step="0.01" id="friction">
+    <br>
+    <input type="submit" value="Submit" />
+  </form>
+
+    <script>
+    let form = document.getElementById("info");
+    form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+      var imax = Number(form.imax.value);
+      var inductance = 0.00001;
+      var coefficient = imax*imax*inductance; // more efficient rather than multipyling same thing every cycle
       var canvas = document.getElementById("canvas");
       var dc  = canvas.getContext("2d");
       var mgnt = canvas.getContext("2d");
-      var w = 100; //komik bir yama yaptım şimdilik eski versiyonda 170 derece verince diğer kutupta küçük salınım yapması lazımdı
-      var wE = 100;
-      var wM = 100;
-      var delta = 40*Math.PI/180;
+      var wE = Number(form.wE.value);
+      var wM = Number(form.wM.value);
+      var w = wM;
+      var delta = Number(form.delta.value)*Math.PI/180;
       var t = 0;
+      var angle = Number(form.delta.value); // initial angle
+      console.log(imax);
+      console.log(wE);
+      console.log(wM);
+      console.log(coefficient);
+      console.log(delta);
+      console.log(angle);
       window.setInterval(function(){
-        Torque =	-power*Math.sin(2*(wM*t+delta))*(Math.sin(wE*t)^2);
-        console.log(Torque);
-        w = w + Torque*0.001;
-        angle = angle + w*0.001 + Torque*0.001*0.0005;
+        Torque =	-coefficient*Math.sin(2*(wM*t+delta))*(Math.sin(wE*t)*(Math.sin(wE*t)));
+        w = w + Torque*1;
+        angle = (angle + w*1) % 360; // no time - angular velocity formula
+        console.log(w);
         dc.clearRect(0, 0, canvas.width, canvas.height);
         mgnt.beginPath();
         mgnt.arc(110,200,125,8*(Math.PI)/12,4*(Math.PI)/12,true);
@@ -60,7 +94,7 @@
         dc.restore();
         t = t + 0.001;
     }, 5);
-
+});
 
     </script>
   </body>

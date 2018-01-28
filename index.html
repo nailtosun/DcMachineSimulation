@@ -21,12 +21,12 @@
     <br>
     <input size=5 type="number" name="angle" id="angle" />
     <br>
-    DC current:
+    DC excite:
     <br>
     <input size=5 type="number" name="power" id="power" />
     <br>
     Friction Damping:
-    <input type="range" min="0" max="10" step="0.01" id="friction">
+    <input type="range" min="0" max="5" step="0.01" id="friction">
     <br>
     <input type="submit" value="Submit" />
   </form>
@@ -37,7 +37,6 @@
 
     form.addEventListener("submit", function (e) {
 
-      // Don't submit form! (Remove this line later - so you can submit! ;))
       e.preventDefault();
 
       var angle = Number(form.angle.value);
